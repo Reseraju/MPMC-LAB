@@ -2,6 +2,8 @@
 #include<conio.h>
 #include<stdlib.h>
 #define max 30
+
+//fcfs
 void fcfs(){
     int i,n,at[max],bt[max],wt[max],tat[max],temp[max];
     float awt=0,atat=0;
@@ -24,7 +26,7 @@ void fcfs(){
         atat=atat+tat[i];
         printf("%d\t %d\t%d\t%d\t%d\n",i+1,at[i],bt[i],wt[i],tat[i]);
     }
-    printf("printing garn chart : \n\n");
+    printf("printing gantt chart : \n\n");
     for(i=0;i<n;i++){
         printf("     p%d\t",i+1);
     }
@@ -40,7 +42,7 @@ void fcfs(){
 
 }
 
-
+//sjf
 void sjf(){
     int i,j,n,p[max],bt[max],wt[max],tat[max],pos,t,temp,sum=0;
     float awt=0,atat=0;
@@ -115,49 +117,57 @@ void sjf(){
     printf("average turn around time : %f",atat);
 }
 
-
+//round robin
 void roundrobin(){
-    int i,n,qt,count=0,temp,sq=0,bt[10],wt[10],tat[10],rem_bt[10],sum=0;
+    int i,n,qt,count=0,temp,sq=0,bt[10],wt[10],tat[10],rem_bt[10],sum=0,p[20],ps[20],t=0;
     float awt=0,atat=0;
     printf("Enter the no of processes : ");
     scanf("%d",&n);
-    printf("Enter the burst time : ");
+    printf("Enter the burst time :\n");
     for(i=0;i<n;i++){
         printf("p[%d] : ",i+1);
         scanf("%d",&bt[i]);
         rem_bt[i]=bt[i];
+        p[i]=i+1;
     }
     printf("enter the quantum time : ");
     scanf("%d",&qt);
     printf("\nGantt chart : \n");
+    printf("0\n");
     while(1){
         for(i=0,count=0;i<n;i++){
             temp=qt;
             if(rem_bt[i]==0){
                 count++;
+                ps[i]=p[i];
                 continue;
-
             }
             if(rem_bt[i]>qt){
                 rem_bt[i]=rem_bt[i]-qt;
+                ps[i]=p[i];
             }
             else{
                 if(rem_bt[i]>=0){
                     temp=rem_bt[i];
                     rem_bt[i]=0;
+                    ps[i]=p[i];
                 }
             }
             sq=sq+temp;
             tat[i]=sq;
+            // t=tat[i];
+            // printf("%d\t",t+1);
 
             //printing gantt chart
-
-            printf("%d\t",sq);
+            printf("\n\tp%d\n",ps[i]);
+            printf("%d\n",sq);
         }
         if(n==count){
             break;
         }
+        
     }
+
     
 
     printf("\nprocess\tBT\tWT\tTAT\t");
@@ -174,7 +184,7 @@ void roundrobin(){
     printf("the average turnaround time is : %f\n",atat);
 }
 
-
+//priority
 void priority(){
     int i,j,n,bt[20],wt[20],pr[20],p[20],tat[20],temp,pos,t[20],sum=0;
     float atat=0,awt=0;
